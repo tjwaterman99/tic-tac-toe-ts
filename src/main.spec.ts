@@ -39,6 +39,10 @@ describe("The game", () => {
         expect(game.currentPlayer()).toBe(player1)
     })
 
+    test("Starts without a winner", () => {
+        expect(game.isFinished().over).toBe(false)
+    })
+
     test("Can play turns", () => {
         let turn = game.play(0)
         expect(turn.player).toBe(player1)
@@ -59,5 +63,32 @@ describe("The game", () => {
             game.play(1)
         }
         expect(t).toThrow()
+    })
+
+    test("Can find a winner", () => {
+        game.play(0)
+        game.play(1)
+        game.play(3)
+        game.play(4)
+        game.play(6)
+        let result = game.isFinished()
+        expect(result.over).toBe(true)
+        expect(result.winning_player).toBe(player1)
+        expect(result.winning_pieces).toContain(game.turns[0].piece)
+    })
+
+    test("Can end in a stalement", () => {
+        game.play(0)
+        game.play(1)
+        game.play(2)
+        game.play(4)
+        game.play(3)
+        game.play(5)
+        game.play(7)
+        game.play(6)
+        game.play(8)
+        let result = game.isFinished()
+        expect(result.over).toBe(true)
+        expect(result.winning_player).toBe(undefined)
     })
 })
