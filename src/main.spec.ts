@@ -8,17 +8,17 @@ describe("The game", () => {
     let pieces: Piece[]
     let turns: Turn[]
 
-    beforeEach( () => {
-        player1 = {name: 'Tom', symbol: 'X'}
-        player2 = {name: 'Hannah', symbol: 'O'}
-        pieces = Array.from(Array(9).keys(), (i) => ({index: i}))
+    beforeEach(() => {
+        player1 = { name: 'Tom', symbol: 'X' }
+        player2 = { name: 'Hannah', symbol: 'O' }
+        pieces = Array.from(Array(9).keys(), (i) => ({ index: i }))
         turns = Array(0)
         game = new Game({
             players: [player1, player2],
             pieces: pieces,
             turns: turns
         })
-    
+
     })
 
     test("Starts with multiple players", () => {
