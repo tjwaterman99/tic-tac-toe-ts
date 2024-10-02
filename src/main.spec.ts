@@ -1,4 +1,4 @@
-import { Player, Game, Piece } from './main'
+import { Player, Game, Piece, Turn } from './main'
 
 
 describe("The game", () => {
@@ -6,14 +6,17 @@ describe("The game", () => {
     let player2: Player
     let game: Game
     let pieces: Piece[]
+    let turns: Turn[]
 
     beforeEach( () => {
         player1 = {name: 'Tom', symbol: 'X'}
         player2 = {name: 'Hannah', symbol: 'O'}
         pieces = Array.from(Array(9).keys(), (i) => ({index: i}))
+        turns = Array(0)
         game = new Game({
             players: [player1, player2],
-            pieces: pieces
+            pieces: pieces,
+            turns: turns
         })
     
     })
@@ -26,5 +29,35 @@ describe("The game", () => {
         expect(game.pieces.length).toBe(9)
         expect(game.pieces[0].index).toBe(0)
         expect(game.pieces[8].index).toBe(8)
+    })
+
+    test("Starts with empty turns", () => {
+        expect(game.turns.length).toBe(0)
+    })
+
+    test("Starts with a first player", () => {
+        expect(game.currentPlayer()).toBe(player1)
+    })
+
+    test("Can play turns", () => {
+        let turn = game.play(0)
+        expect(turn.player).toBe(player1)
+        expect(game.turns.length).toBe(1)
+        expect(game.pieces[0].player).toBe(player1)
+        expect(game.currentPlayer()).toBe(player2)
+
+        let turn2 = game.play(1)
+        expect(turn2.player).toBe(player2)
+        expect(game.turns.length).toBe(2)
+        expect(game.pieces[1].player).toBe(player2)
+        expect(game.currentPlayer()).toBe(player1)
+    })
+
+    test("Can't play the same piece twice", () => {
+        const t = () => {
+            game.play(1)
+            game.play(1)
+        }
+        expect(t).toThrow()
     })
 })
