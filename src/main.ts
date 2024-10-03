@@ -119,4 +119,22 @@ export class Game {
             winning_pieces: winning_pieces
         }
     }
+
+    restart() {
+        this.turns = new Array()
+    }
+}
+
+
+export function createGame(first_player_name: string, second_player_name: string): Game {
+    let player1 = { name: first_player_name, symbol: 'X' }
+    let player2 = { name: second_player_name, symbol: 'O' }
+    let pieces = Array.from(Array(9).keys(), (i) => ({ index: i }))
+    let turns = Array(0)
+    let game = new Game({
+        players: [player1, player2],
+        pieces: pieces,
+        turns: turns
+    })
+    return game
 }

@@ -1,4 +1,4 @@
-import { Player, Game, Piece, Turn } from './main'
+import { createGame, Player, Game, Piece, Turn } from './main'
 
 
 describe("The game", () => {
@@ -91,4 +91,26 @@ describe("The game", () => {
         expect(result.over).toBe(true)
         expect(result.winning_player).toBe(undefined)
     })
+
+    test("Can restart", () => {
+        game.play(0)
+        game.play(8)
+        game.play(1)
+        game.play(4)
+        game.play(2)
+        expect(game.isFinished().over).toBe(true)
+        game.restart()
+        expect(game.isFinished().over).toBe(false)
+        expect(game.currentPlayer()).toBe(game.players[0])
+    })
 })
+
+
+describe("createGame", () => {
+    test("can create a game", () => {
+        let game = createGame("tom", "hannah")
+        expect(game.players[0].name).toBe("tom")
+        expect(game.players[1].name).toBe("hannah")
+    })
+})
+
