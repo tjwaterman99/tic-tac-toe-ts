@@ -99,9 +99,11 @@ describe("The game", () => {
         game.play(4)
         game.play(2)
         expect(game.isFinished().over).toBe(true)
+        expect(game.pieces[0].player).toBe(game.players[0])
         game.restart()
         expect(game.isFinished().over).toBe(false)
         expect(game.currentPlayer()).toBe(game.players[0])
+        expect(game.pieces[0].player).toBe(undefined)
     })
 })
 

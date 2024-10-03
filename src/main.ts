@@ -122,6 +122,9 @@ export class Game {
 
     restart() {
         this.turns = new Array()
+        for (let piece of this.pieces) {
+            piece.player = undefined
+        }
     }
 }
 
